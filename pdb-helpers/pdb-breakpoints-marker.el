@@ -22,6 +22,8 @@
 (defvar pdb-breakpoints-marker-markers '())
 
 (defun pdb-breakpoints-marker-clearall ()
+  (dolist (entry pdb-breakpoints-marker-markers)
+	(delete-overlay (cdr entry)))
   (setq pdb-breakpoints-marker-breakpoints '())
   (setq pdb-breakpoints-marker-markers '()))
 
@@ -40,5 +42,27 @@
 
 (defface pdb-breakpoints-marker-marker-face '((t :foreground "red")))
 
-(defun pdb-breakpoints-marker-add-marker (file line))
-(defun pdb-breakpoints-marker-remove-marker (file line))
+(defun pdb-breakpoints-marker-add-marker (file line)
+  (let ((buffer (find-file-noselect file)))
+    (with-current-buffer buffer
+      (save-excursion
+        (goto-char (point-min))
+        (forward-line (1- line))
+        (let ((ov (make-overlay (point) (point))))
+          (overlay-put
+           ov 'before-string
+           (propertize
+            "BP"
+            'display
+            '(left-fringe
+              filled-square pdb-breakpoints-marker-marker-face)))
+          (push (cons (cons file line) ov)
+                pdb-breakpoints-marker-markers))))))
+
+(defun pdb-breakpoints-marker-remove-marker (file line)
+  (let* ((key (cons file line))
+         (entry (assoc key pdb-breakpoints-marker-markers)))
+    (when entry
+      (delete-overlay (cdr entry))
+      (setq pdb-breakpoints-marker-markers
+            (delete entry pdb-breakpoints-marker-markers)))))
