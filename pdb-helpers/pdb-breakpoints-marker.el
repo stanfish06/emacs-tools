@@ -23,7 +23,7 @@
 
 (defun pdb-breakpoints-marker-clearall ()
   (dolist (entry pdb-breakpoints-marker-markers)
-	(delete-overlay (cdr entry)))
+    (delete-overlay (cdr entry)))
   (setq pdb-breakpoints-marker-breakpoints '())
   (setq pdb-breakpoints-marker-markers '()))
 
@@ -58,7 +58,6 @@
               filled-square pdb-breakpoints-marker-marker-face)))
           (push (cons (cons file line) ov)
                 pdb-breakpoints-marker-markers))))))
-
 (defun pdb-breakpoints-marker-remove-marker (file line)
   (let* ((key (cons file line))
          (entry (assoc key pdb-breakpoints-marker-markers)))
@@ -66,3 +65,21 @@
       (delete-overlay (cdr entry))
       (setq pdb-breakpoints-marker-markers
             (delete entry pdb-breakpoints-marker-markers)))))
+
+(defun pdb-breakpoints-marker-main (orig-fun string)
+  (let ((pos 0))
+    (while (string-match
+            "Breakpoint \\([0-9]+\\) at \\(.+\\):\\([0-9]+\\)" string
+            pos)
+      (pdb-breakpoints-marker-add-breakpoint
+       (match-string 2 string) (match-string 3 string))
+      (setq pos (match-end 0))))
+  (let ((pos 0))
+    (while (string-match
+            "Deleted breakpoint \\([0-9]+\\) at \\(.+\\):\\([0-9]+\\)"
+            string
+            pos)
+      (pdb-breakpoints-marker-remove-breakpoint
+       (match-string 2 string) (match-string 3 string))
+      (setq pos (match-end 0))))
+  (funcall orig-fun string))
