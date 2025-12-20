@@ -84,3 +84,5 @@
        (match-string 2 string) (match-string 3 string))
       (setq pos (match-end 0))))
   (funcall orig-fun string))
+
+(provide 'pdb-breakpoints-marker)
