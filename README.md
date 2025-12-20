@@ -1,0 +1,10 @@
+<table width="100%">
+  <tr>
+    <th>pdb breakpoints</th>
+  </tr>
+  <tr>
+    <td width="100%">
+      <img src="./examples/pdb.png" width="300" />
+    </td>
+  </tr>
+</table>

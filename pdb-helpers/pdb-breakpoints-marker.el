@@ -40,7 +40,8 @@
     (pdb-breakpoints-marker-remove-marker
      file (string-to-number line))))
 
-(defface pdb-breakpoints-marker-marker-face '((t :foreground "red")))
+(defface pdb-breakpoints-marker-marker-face '((t :foreground "red"))
+  "breakpoint font")
 
 (defun pdb-breakpoints-marker-add-marker (file line)
   (let ((buffer (find-file-noselect file)))
