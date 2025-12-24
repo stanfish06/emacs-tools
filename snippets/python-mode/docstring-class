@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: docstring class
+# key: cdoc
+# --
+"""${1:Brief description of the class}.
+
+Attributes
+----------
+${2:attribute_name} : ${3:type}
+    ${4:Description of attribute.}
+"""
+$0

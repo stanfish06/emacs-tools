@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: docstring function
+# key: fdoc
+# --
+"""${1:Brief description}.
+
+Parameters
+----------
+${2:param_name} : ${3:type}
+    ${4:Description of parameter.}
+
+Returns
+-------
+${5:return_type}
+    ${6:Description of return value.}
+"""
+$0
