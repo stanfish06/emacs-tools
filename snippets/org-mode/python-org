@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: python-org-output
+# key: pyorg
+# --
+#+BEGIN_SRC python :session :tangle 'buffer.py' :async :results output
+${1:# code here}
+$0
+#+END_SRC
