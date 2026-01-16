@@ -17,4 +17,4 @@
          (file+headline "~/org-agenda.org" "Tasks")
          "** TODO %?\n  SCHEDULED: %t\n")))
 ;; TODO: add more template and helper functions
-(provide 'agenda)
+(provide 'custom-org-agenda)
