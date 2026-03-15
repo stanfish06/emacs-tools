@@ -29,10 +29,24 @@
                    (= start-near-char end-near-char)
                    (or (= start-near-char ?\")
                        (= start-near-char ?\')))
-              (buffer-substring-no-properties pos-start pos-end)
+              (list
+               (buffer-substring-no-properties pos-start pos-end)
+               pos-start
+               pos-end)
             nil))))))
 
 (defun is-hex-code (str)
   (if str
       (string-match-p "^#[0-9a-fA-F]\\{6\\}$" str)
     nil))
+
+(defun add-color-mark (str-color pos-start pos-end)
+  (let ((ov (make-overlay pos-start pos-end)))
+    (overlay-put ov 'color-mark-custom t)
+    (overlay-put
+     ov 'display
+     (concat
+      (propertize "▣" 'face `(:foreground ,str-color)) str-color))))
+
+(defun clear-buffer-color-marks ()
+  (remove-overlays (point-min) (point-max) 'color-mark-custom t))
