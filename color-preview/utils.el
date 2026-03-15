@@ -23,7 +23,7 @@
         (let ((str-len (- pos-end pos-start))
               (start-near-char (char-before pos-start))
               (end-near-char (char-after pos-end)))
-          (if (and (= str-len 6)
+          (if (and (= str-len 7)
                    start-near-char
                    end-near-char
                    (= start-near-char end-near-char)
@@ -32,4 +32,7 @@
               (buffer-substring-no-properties pos-start pos-end)
             nil))))))
 
-(defun is-hex-code (str))
+(defun is-hex-code (str)
+  (if str
+      (string-match-p "^#[0-9a-fA-F]\\{6\\}$" str)
+    nil))
