@@ -50,3 +50,5 @@
 
 (defun clear-buffer-color-marks ()
   (remove-overlays (point-min) (point-max) 'color-mark-custom t))
+
+(provide 'utils)
